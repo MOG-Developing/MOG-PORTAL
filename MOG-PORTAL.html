@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign in: Mog Portal</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Smooth gradient background */
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #457b9d, #1d3557);
+      color: #333;
+      animation: subtleShift 10s infinite linear;
+    }
+
+    /* Subtle gradient animation */
+    @keyframes subtleShift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    /* Container styling */
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      padding: 30px;
+      width: 400px;
+      text-align: center;
+      transform: scale(0.95);
+      animation: fadeInScale 0.8s ease-out forwards;
+    }
+
+    /* Form fade-in animation */
+    @keyframes fadeInScale {
+      0% { opacity: 0; transform: scale(0.85); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .title {
+      font-size: 26px;
+      font-weight: bold;
+      color: #1d3557;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #457b9d;
+      outline: none;
+      box-shadow: 0 0 8px rgba(69, 123, 157, 0.5);
+    }
+
+    input.error {
+      border-color: #e63946;
+    }
+
+    input.error::placeholder {
+      color: #e63946;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: #457b9d;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease, background-color 0.3s;
+    }
+
+    .submit-btn:hover {
+      background: #1d3557;
+      transform: translateY(-3px);
+    }
+
+    .forgot-btn {
+      background: none;
+      border: none;
+      color: #457b9d;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: color 0.3s, text-decoration 0.3s;
+    }
+
+    .forgot-btn:hover {
+      color: #1d3557;
+      text-decoration: underline;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #888;
+    }
+
+    .footer span {
+      font-weight: bold;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">Sign in</div>
+    <form id="login-form">
+      <input type="email" id="email" name="email" placeholder="Email" required>
+      <input type="text" id="phone" name="phone" placeholder="Phone number (optional)">
+      <input type="password" id="password" name="password" placeholder="Password" required>
+      <button type="submit" class="submit-btn">Next</button>
+      <button class="forgot-btn" type="button">Forgot password?</button>
+    </form>
+    <div class="footer">MOG-PORTAL</div>
+  </div>
+
+  <script>
+    const emailInput = document.getElementById('email');
+    const form = document.getElementById('login-form');
+
+    // Email validation
+    emailInput.addEventListener('input', () => {
+      if (emailInput.validity.typeMismatch || !emailInput.value.includes('@')) {
+        emailInput.classList.add('error');
+        emailInput.placeholder = 'Please enter a valid email';
+      } else {
+        emailInput.classList.remove('error');
+        emailInput.placeholder = 'Email';
+      }
+    });
+
+    // Form submission handling
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      if (emailInput.classList.contains('error')) {
+        alert('Please correct your email before proceeding.');
+        return;
+      }
+
+      const successMessage = document.createElement('div');
+      successMessage.textContent = 'Logging you in...';
+      successMessage.style.marginTop = '20px';
+      successMessage.style.color = '#1d3557';
+      successMessage.style.animation = 'fadeIn 1s ease-out';
+
+      form.style.display = 'none';
+      document.querySelector('.container').appendChild(successMessage);
+
+      setTimeout(() => {
+        form.submit();
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
